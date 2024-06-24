@@ -1,0 +1,354 @@
+{
+  "conditional_rules": [
+    {
+      "description": "General (valid for all rows)",
+      "condition": "general == True",
+      "field_validations": [
+        {
+          "id": "Gen1",
+          "description": "Co-operation modality is (A01 or A02)",
+          "field_names": ["Co-operation modality (A01 or A02)"],
+          "valid_values": ["A01","A02"],
+          "empty_allowed": false
+        },
+        {
+          "id": "Gen2",
+          "description": "Decision variables not empty",
+          "field_names": ["CRIS Decision No", "First year of origin", "Short Description", "Description", "Instruments L2", "Recipient EU Desc", "Income Group Code", "Mgmt Region_Name", "Reporting DG", "Entity in charge (Delegation/Unit)", "Main SDG of decision", "Main theme of decision", "Co-operation modality (A01 or A02)", "Signature Date EU (dd/mm/yy)", "Type of BS contract", "Original Total Cost in M€", "Original EU Contribution in M€", "Original Amount Decision in millions of Euros", "Original Amount BS in millions of Euros"],
+          "invalid_values": ["0","-",0],
+          "empty_allowed": false
+        },
+        {
+          "id": "Gen3",
+          "description": "Duration and status not empty",
+          "field_names": ["Planned duration of the BS component", "Status of BS component"],
+          "invalid_values": ["0","-",0]
+        },
+        {
+          "id": "Gen4",
+          "description": "Main SDG of Decision and Tranch Check",
+          "field_names": ["Main SDG of decision", "Tranche or Indicator Main SDG in number" ],
+          "valid_patterns": ["\\bSDG(1[0-7]|[1-9])\\b"],
+          "empty_allowed": false
+        },
+        {
+          "id": "Gen5",
+          "description": "SDG and markers columns not empty",
+          "field_names": ["SDG1", "SDG2", "SDG3", "SDG4", "SDG5", "SDG6", "SDG7", "SDG8", "SDG9", "SDG10", "SDG11", "SDG12", "SDG13", "SDG14", "SDG15", "MK Aid To Environment", "MK Gender Equality", "MK Trade Development", "RMNCH", "Mk Disaster Risk Management", "Mk Disability", "Mk Nutrition", "Climate RIO markers", "MK Biodiversity", "MK Desertification", "MK Climate Change Mitigation", "MK Climate Change Adaptation", "Digitalisation", "Digital connectivity", "Digital governance", "Digital entrepreneurship", "Job creation", "Digital skills/literacy", "Digital services", "Connectivity", "Transport", "People2people", "Energy", "Digital connectivity2", "Mk Migration", "Inequalities", "Mk Covid", "Blending", "TEI", "Migration", "Climate", "Social inclusion and Human Development", "Gender", "Biodiversity", "Education", "HR, Democracy Governance", "Inclusive and sustainable growth for human development"],
+          "valid_values": ["0","1","2",0,1,2,"0.0","1.0","2.0"],
+          "empty_allowed": false
+        },
+        {
+          "id": "Gen6",
+          "description": "column ‘SDG16‘, ‘SDG17’ and ‘MK DIG’ should be ‘1’ or ‘2’ (no ‘0 allowed)",
+          "field_names": ["SDG16", "SDG17", "MK DIG"],
+          "valid_values": ["1","2",1,2],
+          "empty_allowed": false
+        },
+        {
+          "id": "Gen7",
+          "description": " Column “Amendments in FA (0 no, 1 yes)”: entry should be either 0 or 1",
+          "field_names": ["Amendments in FA (0 no, 1 yes)"],
+          "valid_values": ["0","1",0,1],
+          "empty_allowed": false
+        },
+        {
+          "id": "Gen8",
+          "description": "Column ‘FT or VT’: entry should be either ‘FT’ or ‘VT’",
+          "field_names": ["FT or VT"],
+          "valid_values": ["VT","FT"],
+          "empty_allowed": false
+        },
+        {
+          "id": "Gen9",
+          "description": "Fiscal Quarters can only be Q1, Q2, Q3 or Q4",
+          "field_names": ["Fiscal Quarter of Planned Disbursement","Fiscal Quarter of Actual Disbursement"],
+          "valid_values": ["Q1", "Q2", "Q3", "Q4", "-", "n.a."],
+          "empty_allowed": false
+        },
+        {
+          "id": "Gen10",
+          "description": "Each line in column ‘Sub-indicator (Yes/No)’ entry can only be Yes or No or ‘-‘",
+          "field_names": ["Sub-indicator (Yes/No)"],
+          "valid_values": ["Yes", "No", "-","n/a","N/A"],
+          "empty_allowed": false
+        },
+        {
+          "id": "Gen11",
+          "description": "Each line in column ‘Type of indicator’ can only be pre-condition, input, output, process, outcome, impact or ‘-‘",
+          "field_names": ["Type of indicator"],
+          "valid_values": ["Pre-condition", "Input", "Output", "Process", "Outcome", "Impact", "-"],
+          "empty_allowed": false
+        }
+
+      ]
+    },
+    {
+      "description": "When SDG5 is 1",
+      "condition": "row.get('SDG5', '') in ('1',1,'1.0')",
+      "field_validations": [
+        {
+          "id": "Co1",
+          "description": "",
+          "field_names": ["MK Gender Equality"],
+          "valid_values": ["1",1,"1.0","2",2,"2.0"],
+          "empty_allowed": false
+        }
+      ]
+    },
+    {
+      "description": "When MK Gender Equality is 1 or 2",
+      "condition": "row.get('MK Gender Equality', '') in ('1',1,'1.0','2',2,'2.0')",
+      "field_validations": [
+        {
+          "id": "Co2",
+          "description": "",
+          "field_names": ["SDG5"],
+          "invalid_values": ["0",0,"0.0"],
+          "empty_allowed": false
+        }
+      ]
+    },
+    {
+      "description": "When SDG5 is 2",
+      "condition": "row.get('SDG5', '') in ('2',2,'2.0')",
+      "field_validations": [
+        {
+          "id": "Co3",
+          "description": "",
+          "field_names": ["MK Gender Equality"],
+          "valid_values": ["2",2,"2.0"],
+          "empty_allowed": false
+        }
+      ]
+    },
+    {
+      "description": "When SDG10 is 1",
+      "condition": "row.get('SDG10', '') in ('1',1,'1.0')",
+      "field_validations": [
+        {
+          "id": "Co5",
+          "description": "",
+          "field_names": ["Inequalities"],
+          "valid_values": ["1",1,"1.0","2",2,"2.0"],
+          "empty_allowed": false
+        }
+      ]
+    },
+    {
+      "description": "When Inequalities is 1 or 2",
+      "condition": "row.get('Inequalities', '') in ('1',1,'1.0','2',2,'2.0')",
+      "field_validations": [
+        {
+          "id": "Co6",
+          "description": "",
+          "field_names": ["SDG10"],
+          "invalid_values": ["0",0,"0.0"],
+          "empty_allowed": false
+        }
+      ]
+    },
+    {
+      "description": "When SDG10 is 2",
+      "condition": "row.get('SDG10', '') in ('2',2,'2.0')",
+      "field_validations": [
+        {
+          "id": "Co7",
+          "description": "",
+          "field_names": ["Inequalities"],
+          "valid_values": ["2",2,"2.0"],
+          "empty_allowed": false
+        }
+      ]
+    },
+    {
+      "description": "When Climate RIO markers is 1",
+      "condition": "row.get('Climate RIO markers', '') in ('1',1,'1.0')",
+      "field_validations": [
+        {
+          "id": "Co9",
+          "description": "",
+          "field_names": ["MK Aid To Environment"],
+          "valid_values": ["1",1,"1.0","2","2.0",2],
+          "empty_allowed": false
+        }
+      ]
+    },
+    {
+      "description": "When Climate RIO markers is 2",
+      "condition": "row.get('Climate RIO markers', '') in ('2',2,'2.0')",
+      "field_validations": [
+        {
+          "id": "Co10",
+          "description": "",
+          "field_names": ["MK Aid To Environment"],
+          "valid_values": ["2",2,"2.0"],
+          "empty_allowed": false
+        }
+      ]
+    },
+    {
+      "description": "'Sub-indicator (Yes/No)' is ‘-‘ ",
+      "condition": "row.get('Sub-indicator (Yes/No)', '') == '-' and row.get('FT or VT', '') == 'VT'",
+      "field_validations": [
+        {
+          "id": "Co11",
+          "description": "",
+          "field_names": ["Type of indicator"],
+          "valid_values": ["-"],
+          "empty_allowed": false
+        }
+      ]
+    },
+    {
+      "description": "entry is FT in column 'FT or VT ",
+      "condition": "row.get('FT or VT', '') == 'FT'",
+      "field_validations": [
+        {
+          "id": "Co12",
+          "description": "",
+          "field_names": ["Tranche"],
+          "valid_patterns": ["\\bFT(1[0-9]|[1-9])\\b"],
+          "empty_allowed": false
+        }
+      ]
+    }
+  ],
+  "group_consistency_rules": [
+      {
+        "ID": "GC1",
+        "description": "Decision block consistency",
+        "group_by_columns": ["CRIS Decision No"],
+        "field_names": ["Action No", "First year of origin", "Short Description", "Description", "Instruments L2", "Decision Status", "Country ISO Code", "Recipient EU Desc", "Income Group Code", "Mgmt Region_Name", "Reporting DG", "Entity in charge (Delegation/Unit)", "Main SDG of decision", "Main theme of decision", "Co-operation modality (A01 or A02)", "Signature Date EU (dd/mm/yy)", "Type of BS contract", "Original Total Cost in M€", "Original EU Contribution in M€", "Original Amount Decision in millions of Euros", "Original Amount BS in millions of Euros", "Original Amount CB in millions of Euros", "Original Amount Audit & Evaluation in millions of Euros", "Original Amount for Blending", "Original Other in millions of Euros", "Original Planned Year Start", "Original Planned Year End", "Final Total Cost in M€", "Final EU Contribution in M€", "Final Amount Decision in millions of Euros"]
+      },
+      {
+        "ID": "GC2",
+        "description": "Recipient country consistency",
+        "group_by_columns": ["Country ISO Code"],
+        "field_names": ["Recipient EU Desc", "Income Group Code", "Mgmt Region_Name", "Reporting DG", "Entity in charge (Delegation/Unit)"]
+      },
+      {
+        "ID": "GC4",
+        "description": "Tranche consistency",
+        "group_by_columns": ["CRIS Decision No","Tranche"],
+        "field_names": [ "Value VT only", "FT or VT", "Fiscal Quarter of Planned Disbursement", "Fiscal Year of Planned Disbursement", "Original Planned Amount Tranche in €M", "Final Planned Amount Tranche in €M", "Disbursed Amount Tranche in €M", "Fiscal Quarter of Actual Disbursement", "Fiscal Year of Actual Disbursement", "Actual disbursement date (dd/mm/yy)", "Deviation actual - planned disbursement year", "Actual last tranche disbursement date (dd/mm/yy)", "Actual duration of BS component (years)", "Tranche  Disbursement rate in % of original tranche", "Tranche  Disbursement rate in % of final tranche", "Total number of indicators per FA"]
+      },
+      {
+        "ID": "GCS1",
+        "description": "Spelling of SDGs",
+        "group_by_columns": ["Tranche or Indicator Main SDG in number"],
+        "field_names": ["Tranche or Indicator Main SDG in words"]
+      },
+      {
+        "ID": "GCS4",
+        "description": "Spelling of Level 1 Sector DAC 5",
+        "group_by_columns": ["Level 1 Sector DAC 5 code"],
+        "field_names": ["Level 1 Sector DAC 5 (in words)"]
+      },
+      {
+        "ID": "GCS5",
+        "description": "Spelling of Level 2 Sector CRS code",
+        "group_by_columns": ["Level 2 Sector CRS code (5 digit code)"],
+        "field_names": ["Level 2 Sector CRS code (in words)"]
+      },
+      {
+        "ID": "GC3",
+        "description": "Final Planned Tranche Amount Consistency",
+        "group_by_columns": ["CRIS Decision No","Tranche"],
+        "arithmetic_check": {
+          "sum_column": "Final maximum amount of tranche or indicator in M€",
+          "compare_column": "Final Planned Amount Tranche in €M"
+        },
+        "acceptable_error_percent": 0.1,
+        "no_error_value": "-"
+      },
+      {
+        "ID": "GC4",
+        "description": "Final Decision Amount Consistency",
+        "group_by_columns": ["CRIS Decision No"],
+        "arithmetic_check": {
+          "sum_column": "Final maximum amount of tranche or indicator in M€",
+          "compare_column": "Final Amount BS in millions of Euros"
+        },
+        "acceptable_error_percent": 0.1,
+        "no_error_value": "-"
+      },
+      {
+        "ID": "GC6",
+        "description": "Disbursed Tranche Amount Consistency",
+        "group_by_columns": ["CRIS Decision No","Tranche"],
+        "arithmetic_check": {
+          "sum_column": "Disbursed Amount Tranche or Indicator in €M",
+          "compare_column": "Disbursed Amount Tranche in €M"
+        },
+        "acceptable_error_percent": 0.1,
+        "no_error_value": "-"
+      }
+  ],
+  "conditional_sum_consistency_rules": [
+    {
+      "ID": "CSC1",
+      "description": "Original Decision Amount Consistency when change through rider not 'REL'",
+      "condition": "row['Indicator or target change through Rider 0 or 1'] != 'REL'",
+      "group_by_columns": ["CRIS Decision No"],
+      "sum_column": "Original maximum amount of tranche or indicator in M€",
+      "compare_column": "Original Amount BS in millions of Euros",
+      "acceptable_error_percent": 0.1
+    }
+  ],
+  "arithmetic_rules": [
+    {
+      "ID": "AR1",
+      "description": "Validate arithmetic operations for decision amounts",
+      "expected_column": "Original Amount Decision in millions of Euros",
+      "add": [
+        "Original Amount BS in millions of Euros",
+        "Original Amount CB in millions of Euros",
+        "Original Amount Audit & Evaluation in millions of Euros",
+        "Original Amount for Blending",
+        "Original Other in millions of Euros"
+      ],
+      "subtract": [],
+      "acceptable_error_percent": 0.1
+    },
+    {
+      "ID": "AR2",
+      "description": "Column 'Original Planned duration of the BS component'= 'Original Planned Year End'- 'Original Planned Year Start' +1",
+      "expected_column": "Planned duration of the BS component",
+      "add": [
+        "Final Planned Year End"
+      ],
+      "subtract": ["Final Planned Year Start"],
+      "adjustment": 1
+    },
+    {
+      "ID": "AR3",
+      "description": "Values in column ' Final EU Contribution in M€ ' = column ' Final Amount Decision in millions of Euros' (Amount Decision = EU contribution)",
+      "expected_column": "Final EU Contribution in M€",
+      "add": [
+        "Final Amount Decision in millions of Euros"
+      ]
+    },
+    {
+      "ID": "AR4",
+      "description": "Values Columns ' Final Amount BS in millions of Euros' + ' Final Amount CB in millions of Euros' + ' Final Amount Audit & Evaluation in millions of Euros' + ' Final Amount for Blending' + ' Final Other in millions of Euros' = ' Final Amount Decision in millions of Euros'",
+      "expected_column": "Final Amount Decision in millions of Euros",
+      "add": [
+        "Final Amount BS in millions of Euros",
+        "Final Amount CB in millions of Euros",
+        "Final Amount Audit & Evaluation in millions of Euros",
+        "Final Amount for Blending",
+        "Final Other in millions of Euros"
+      ],
+      "acceptable_error_percent": 0.1
+    },
+    {
+      "ID": "AR5",
+      "description": "Values in column ' Original EU Contribution in M€ ' = column ' Original Amount Decision in millions of Euros' (Amount Decision = EU contribution)",
+      "expected_column": "Original EU Contribution in M€",
+      "add": [
+        "Original Amount Decision in millions of Euros"
+      ]
+    }
+  ]
+}
