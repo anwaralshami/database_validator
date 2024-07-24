@@ -38,7 +38,7 @@ Before running the script, ensure that the paths to the JSON and Excel files are
 
 ```python
 # Load business rules from JSON
-with open('business_rules_compiled.json', 'r') as file:
+with open('business_rules_compiled.json', 'r', encoding='utf-8') as file:
     rules = json.load(file)
 
 # Load the Excel file
