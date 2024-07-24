@@ -116,6 +116,9 @@ If you encounter any issues, ensure that:
 
 For further assistance, you can refer to the comments within the script for detailed explanations of each function and validation rule.
 
+## Disclaimer
+This script is not intended for production use and was developed as a solution due to the unviability of using MS Access for this purpose. It was not a predetermined deliverable of the contract and is provided “as is” without any warranties or guarantees of its performance or reliability.
+
 ---
 
 By following the instructions in this README, you should be able to set up, configure, and run the data validation script effectively. For any further questions or issues, please refer to the comments in the script or seek additional help from relevant resources.
