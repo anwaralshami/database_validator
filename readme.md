@@ -4,6 +4,11 @@
 
 This script performs data validation on a dataset loaded from an Excel file, based on a set of business rules defined in a JSON file. The script checks for various types of inconsistencies and errors, including invalid values, arithmetic inconsistencies, group consistency, and more. The results of the validation are saved to an `errors.txt` file.
 
+## Changes (24-07-2024)
+- Enforced UTF-8 encoding of json files
+- Streamlined console output
+- Excluded deprecated rules
+
 ## Requirements
 
 - Python 3.7+

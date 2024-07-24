@@ -312,16 +312,6 @@
       "acceptable_error_percent": 0.1
     },
     {
-      "ID": "AR2",
-      "description": "Column 'Original Planned duration of the BS component'= 'Original Planned Year End'- 'Original Planned Year Start' +1",
-      "expected_column": "Planned duration of the BS component",
-      "add": [
-        "Final Planned Year End"
-      ],
-      "subtract": ["Final Planned Year Start"],
-      "adjustment": 1
-    },
-    {
       "ID": "AR3",
       "description": "Values in column ' Final EU Contribution in M€ ' = column ' Final Amount Decision in millions of Euros' (Amount Decision = EU contribution)",
       "expected_column": "Final EU Contribution in M€",

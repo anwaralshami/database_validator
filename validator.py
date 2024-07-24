@@ -4,6 +4,7 @@ import re
 import numpy as np
 from datetime import datetime
 import sys
+import warnings
 
 
 general = True # this allows rules with this condition to run on all rows
@@ -11,7 +12,7 @@ general = True # this allows rules with this condition to run on all rows
 # TODO add testing for standalone rules
 # Assuming the business rules JSON and Excel file are properly formatted and located.
 # Load business rules from JSON
-with open('business_rules_compiled.json', 'r') as file:
+with open('business_rules_compiled.json', 'r', encoding='utf-8') as file:
     rules = json.load(file)
 
 # Load the Excel file
@@ -411,7 +412,7 @@ def validate_sector_code_consistency(df):
         sector_code_l2 = str(row['Level 2 Sector CRS code (5 digit code)'])
 
         # Check if the first three characters of Sector_Code_L2 match Sector_Code_L1
-        if not sector_code_l2.startswith(sector_code_l1):
+        if not sector_code_l2.startswith(sector_code_l1[:3]):
             error_msg = (f"Row {index + 2}: 'Level 2 Sector CRS code (5 digit code)' ({sector_code_l2}) does not start with "
                          f"the same digits as 'Level 1 Sector DAC 5 code' ({sector_code_l1}).")
             error_log[index + 2] = error_msg
@@ -556,8 +557,8 @@ def main():
     actual_duration_errors = []
     for index, row in df.iterrows():
         error = check_actual_duration_errors(row)
-        if error:
-            actual_duration_errors.append((index, error))
+        #if error:
+            #actual_duration_errors.append((index, error))
 
     # Report Actual duration errors
     if actual_duration_errors:
@@ -643,6 +644,7 @@ def main():
 #         # Exit the script or handle the missing columns as needed
 
 if __name__ == "__main__":
+    warnings.filterwarnings('ignore')
     original_stdout = sys.stdout  # Save a reference to the original standard output
 
     with open('errors.txt', 'w') as f:
